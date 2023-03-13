@@ -41,7 +41,7 @@ public class ExtendedQuerydslJpaRepositoryTest extends TestBase {
         var janeDoe = givenSavedPerson("Jane", "Doe");
         List<Person> actual = null;
 
-        //wh\en
+        //when
         try (var stream = repository.streamAll()) {
             actual = stream.collect(Collectors.toList());
         }
