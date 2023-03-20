@@ -6,6 +6,9 @@ import com.example.board.dto.PageRequestDTO;
 import com.example.board.dto.PageResultDTO;
 import com.example.board.entity.Board;
 import com.example.board.entity.Member;
+import org.jooq.Result;
+
+import java.util.List;
 
 public interface BoardService {
     Long register(BoardDTO dto);
@@ -14,11 +17,20 @@ public interface BoardService {
 
     BoardDTO get(Long bno);
 
+    void removeWithReplies(Long bno);
+
+    void modify(BoardDTO boardDTO);
+
+    List jooqGet(Long bno);
+
+    Result jooqGet();
+
     default Board dtoToEntity(BoardDTO dto){
         Member member = Member.builder().email(dto.getWriterEmail()).build();
 
         Board board = Board.builder()
                 .bno(dto.getBno())
+
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .writer(member)

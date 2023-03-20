@@ -23,7 +23,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "left join Reply r on r.board = b " +
             "group by b, w",
             countQuery = "SELECT count(b) FROM Board b")
-    Page<Object[]> getBoardWithReplyCount(Pageable pageable); //Oracle에서 작동 안함...
+    Page<Object[]> getBoardWithReplyCount(Pageable pageable);
 
     @Query("select b, w, count(r) " +
             "from Board b left join b.writer w " +
@@ -32,11 +32,3 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "group by b, w")
     Object getBoardByBno(@Param("bno") Long bno);
 }
-/*
-    select j1.*, c " +
-        "from (select * from board b left join MEMBER m on b.writer_email=m.email) j1 " +
-        "left join (select b.bno, count(*) c from reply r left join board b on b.bno=r.board_bno group by b.bno) j2 " +
-        "on j1.bno=j2.bno " +
-        "order by j1.bno desc
-
- */
