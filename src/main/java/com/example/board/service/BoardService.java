@@ -30,7 +30,6 @@ public interface BoardService {
 
         Board board = Board.builder()
                 .bno(dto.getBno())
-
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .writer(member)

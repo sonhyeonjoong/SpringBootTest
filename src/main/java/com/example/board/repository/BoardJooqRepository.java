@@ -12,9 +12,11 @@ package com.example.board.repository;
         import org.jooq.Record3;
         import org.jooq.Result;
         import org.jooq.impl.DSL;
+        import org.springframework.data.domain.Page;
         import org.springframework.stereotype.Repository;
 
         import java.util.List;
+        import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -40,17 +42,17 @@ public class BoardJooqRepository {
                 .fetch();
     }
 
-    public Result<Record3<BoardRecord, BoardMemberRecord, Integer>> getBoardList() {
-        return dsl.select(board, boardmember, DSL.count())
-                .from(board
-                        .leftJoin(boardmember)
-                        .on(boardmember.EMAIL
-                                .eq(board.WRITER_EMAIL))
-                        .leftJoin(reply)
-                        .on(reply.BOARD_BNO
-                                .eq(board.BNO)))
-                .groupBy(board, boardmember)
-                .orderBy(board.BNO.asc())
+        public Result<Record3<BoardRecord, BoardMemberRecord, Integer>> getBoardList() {
+            return dsl.select(board, boardmember, DSL.count())
+                    .from(board
+                            .leftJoin(boardmember)
+                            .on(boardmember.EMAIL
+                                    .eq(board.WRITER_EMAIL))
+                            .leftJoin(reply)
+                            .on(reply.BOARD_BNO
+                                    .eq(board.BNO)))
+                    .groupBy(board, boardmember)
+                    .orderBy(board.BNO.asc())
                 .fetch();
     }
 }
